@@ -47,7 +47,7 @@ def run_sda(datasets=None, batch_size=100,
     pretrain_lr:        Pretraining learning rate.
     training_epochs:    Fine-tuning epoches.
     finetune_lr:        Fine-tuning learning rate.
-    hidden_layers_sizes:A list containing integers. Each intger specifies a size
+    hidden_layers_sizes:A list containing integers. Each integer specifies a size
                         of a hidden layer.
     corruption_levels:  A list containing floats in the inteval [0, 1]. Each 
                         number specifies the corruption level of its corresponding
