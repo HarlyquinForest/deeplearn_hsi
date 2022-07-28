@@ -56,38 +56,38 @@ cmap = numpy.asarray( [[0, 0, 0],
 def result_analysis(prediction, train_truth, valid_truth, test_truth, 
                     verbose=False):
     assert prediction.shape == test_truth.shape
-    print "Detailed information in each category:"
-    print "                          Number of Samples"
-    print "Class No.       TRAIN   VALID   TEST    RightCount   RightRate"
-    for i in xrange(test_truth.min(), test_truth.max()+1):
+    print("Detailed information in each category:")
+    print("                          Number of Samples")
+    print("Class No.       TRAIN   VALID   TEST    RightCount   RightRate")
+    for i in range(test_truth.min(), test_truth.max()+1):
         right_prediction = ( (test_truth-prediction) == 0 )
         right_count = numpy.sum(((test_truth==i) * right_prediction)*1)
-        print "%d\t\t%d\t%d\t%d\t%d\t%f" % \
+        print("%d\t\t%d\t%d\t%d\t%d\t%f" % \
             (i, 
              numpy.sum((train_truth==i)*1), 
              numpy.sum((valid_truth==i)*1), 
              numpy.sum((test_truth==i)*1),
              right_count,
              right_count * 1.0 / numpy.sum((test_truth==i)*1)
-            )
+            ))
     
     total_right_count = numpy.sum(right_prediction*1)
-    print "Overall\t\t%d\t%d\t%d\t%d\t%f" % \
+    print("Overall\t\t%d\t%d\t%d\t%d\t%f" % \
             (train_truth.size, 
              valid_truth.size, 
              test_truth.size, 
              total_right_count,
              total_right_count * 1.0 / test_truth.size
-            )
+            ))
     
     cm = confusion_matrix(test_truth, prediction)
     pr_a = cm.trace()*1.0 / test_truth.size
     pr_e = ((cm.sum(axis=0)*1.0/test_truth.size) * \
             (cm.sum(axis=1)*1.0/test_truth.size)).sum()
     k = (pr_a - pr_e) / (1 - pr_e)
-    print "kappa index of agreement: %f" % k
-    print "confusion matrix:"
-    print cm
+    print("kappa index of agreement: %f" % k)
+    print("confusion matrix:")
+    print(cm)
     # Show confusion matrix
     pl.matshow(cm)
     pl.title('Confusion matrix')
@@ -185,7 +185,7 @@ def tile_raster_images(X, img_shape, tile_shape, tile_spacing=(0, 0),
     assert len(tile_spacing) == 2
 
     out_shape = [
-        (ishp + tsp) * tshp - tsp
+        int((ishp + tsp) * tshp - tsp)
         for ishp, tshp, tsp in zip(img_shape, tile_shape, tile_spacing)
     ]
 
@@ -205,7 +205,7 @@ def tile_raster_images(X, img_shape, tile_shape, tile_spacing=(0, 0),
         else:
             channel_defaults = [0., 0., 0., 1.]
 
-        for i in xrange(4):
+        for i in range(4):
             if X[i] is None:
                 # if channel is None, fill it with zeros of the correct
                 # dtype
@@ -235,8 +235,8 @@ def tile_raster_images(X, img_shape, tile_shape, tile_spacing=(0, 0),
             dt = 'uint8'
         out_array = numpy.zeros(out_shape, dtype=dt)
 
-        for tile_row in xrange(tile_shape[0]):
-            for tile_col in xrange(tile_shape[1]):
+        for tile_row in range(tile_shape[0]):
+            for tile_col in range(tile_shape[1]):
                 if tile_row * tile_shape[1] + tile_col < X.shape[0]:
                     this_x = X[tile_row * tile_shape[1] + tile_col]
                     if scale_rows_to_unit_interval:
@@ -352,7 +352,7 @@ def T_pca_constructor(hsi_img=None, gnd_img=None, n_principle=3, window_size=1,
     reshaped_gnd = gnd_img.reshape(gnd_img.size) 
     
     # mask ensures marginal pixels eliminated, according to window_size
-    threshold = (window_size-1) / 2
+    threshold = (window_size-1) // 2
     if window_size >= 1 and window_size < width-1 and window_size < length-1:
         mask_false = numpy.array([False, ] * width)
         mask_true = numpy.hstack((numpy.array([False, ] * threshold, dtype='bool'),
@@ -363,7 +363,7 @@ def T_pca_constructor(hsi_img=None, gnd_img=None, n_principle=3, window_size=1,
                              numpy.tile(mask_false, [threshold, 1])))
         reshaped_mask = mask.reshape(mask.size)
     else:
-        print >> sys.stderr, ('window_size error. choose 0 < window_size < width-1')
+        print(('window_size error. choose 0 < window_size < width-1'), file=sys.stderr)
         
     # construct groundtruth, and determine which pixel to process
     if flag == 'supervised':
@@ -374,8 +374,8 @@ def T_pca_constructor(hsi_img=None, gnd_img=None, n_principle=3, window_size=1,
         extracted_pixel_ind = numpy.arange(reshaped_gnd.size)[reshaped_mask]
         gndtruth = numpy.array([], dtype='int')
     else:
-        print >> sys.stderr, ('\"flag\" parameter error. ' +
-                              'What type of learning you are doing?')
+        print(('\"flag\" parameter error. ' +
+                              'What type of learning you are doing?'), file=sys.stderr)
         return
     
     # construct data_spectral
@@ -391,7 +391,7 @@ def T_pca_constructor(hsi_img=None, gnd_img=None, n_principle=3, window_size=1,
         i = 0
         for ipixel in extracted_pixel_ind:
             ipixel_h = ipixel % width
-            ipixel_v = ipixel / width
+            ipixel_v = ipixel // width
             data_spatial[i, :] = \
             pca_img[ipixel_v-threshold : ipixel_v+threshold+1, 
                     ipixel_h-threshold : ipixel_h+threshold+1, :].reshape(
@@ -552,33 +552,33 @@ def prepare_data(hsi_img=None, gnd_img=None, window_size=7, n_principle=3,
 
 if __name__ == '__main__':
     """ Sample usage. """
-    print '... Testing function result_analysis'
+    print('... Testing function result_analysis')
     import random
     from sklearn import svm, datasets
     
     # import some data to play with
-    print '... loading Iris data'
+    print('... loading Iris data')
     iris = datasets.load_iris()
     X = iris.data
     y = iris.target
     n_samples, n_features = X.shape
-    p = range(n_samples)
+    p = list(range(n_samples))
     random.seed(0)
     random.shuffle(p)
     X, y = X[p], y[p]
     half = int(n_samples / 2)
 
     # Run classifier
-    print '... classifying'
+    print('... classifying')
     classifier = svm.SVC(kernel='linear')
     y_ = classifier.fit(X[:half], y[:half]).predict(X[half:])
 
     result_analysis(y_, y[:half], numpy.asarray([]), y[half:])
     
     # load .mat files
-    print '... loading KSC data'
-    hsi_file = u'/home/hantek/data/hsi_data/kennedy/Kennedy_denoise.mat'
-    gnd_file = u'/home/hantek/data/hsi_data/kennedy/Kennedy_groundtruth.mat'
+    print('... loading KSC data')
+    hsi_file = '/home/hantek/data/hsi_data/kennedy/Kennedy_denoise.mat'
+    gnd_file = '/home/hantek/data/hsi_data/kennedy/Kennedy_groundtruth.mat'
     
     data = sio.loadmat(hsi_file)
     img = numpy.float_(data['Kennedy176'])
@@ -587,11 +587,11 @@ if __name__ == '__main__':
     gnd_img = data['Kennedy_groundtruth']
     gnd_img = gnd_img.astype(numpy.int32)
 
-    print '... spliting train-valid-test sets'
+    print('... spliting train-valid-test sets')
     dataset_spectral, dataset_spatial, extracted_pixel_ind, split_mask = \
         prepare_data(hsi_img=img, gnd_img=gnd_img, window_size=7, n_principle=3, batch_size=50, merge=True)
 
-    if raw_input('Spliting finished. Do you want to check the data (Y/n)? ') == 'Y':
+    if input('Spliting finished. Do you want to check the data (Y/n)? ') == 'Y':
         spectral_train_x = dataset_spectral[0][0].get_value()
         spectral_train_y = dataset_spectral[0][1].get_value()
         spectral_valid_x = dataset_spectral[1][0].get_value()
@@ -606,47 +606,47 @@ if __name__ == '__main__':
         spatial_test_x   = dataset_spatial[2][0].get_value()
         spatial_test_y   = dataset_spatial[2][1].get_value()
 
-        print 'shape of:' 
-        print 'spectral_train_x: \t', 
-        print spectral_train_x.shape, 
-        print 'spectral_train_y: \t', 
-        print spectral_train_y.shape
-        print 'spectral_valid_x: \t', 
-        print spectral_valid_x.shape,
-        print 'spectral_valid_y: \t', 
-        print spectral_valid_y.shape
-        print 'spectral_test_x: \t', 
-        print spectral_test_x.shape,
-        print 'spectral_test_y: \t', 
-        print spectral_test_y.shape
+        print('shape of:') 
+        print('spectral_train_x: \t', end=' ') 
+        print(spectral_train_x.shape, end=' ') 
+        print('spectral_train_y: \t', end=' ') 
+        print(spectral_train_y.shape)
+        print('spectral_valid_x: \t', end=' ') 
+        print(spectral_valid_x.shape, end=' ')
+        print('spectral_valid_y: \t', end=' ') 
+        print(spectral_valid_y.shape)
+        print('spectral_test_x: \t', end=' ') 
+        print(spectral_test_x.shape, end=' ')
+        print('spectral_test_y: \t', end=' ') 
+        print(spectral_test_y.shape)
         
-        print 'spatial_train_x: \t', 
-        print spatial_train_x.shape,
-        print 'spatial_train_y: \t', 
-        print spatial_train_y.shape
-        print 'spatial_valid_x: \t', 
-        print spatial_valid_x.shape, 
-        print 'spatial_valid_y: \t', 
-        print spatial_valid_y.shape
-        print 'spatial_test_x: \t', 
-        print spatial_test_x.shape, 
-        print 'spatial_test_y: \t', 
-        print spatial_test_y.shape
+        print('spatial_train_x: \t', end=' ') 
+        print(spatial_train_x.shape, end=' ')
+        print('spatial_train_y: \t', end=' ') 
+        print(spatial_train_y.shape)
+        print('spatial_valid_x: \t', end=' ') 
+        print(spatial_valid_x.shape, end=' ') 
+        print('spatial_valid_y: \t', end=' ') 
+        print(spatial_valid_y.shape)
+        print('spatial_test_x: \t', end=' ') 
+        print(spatial_test_x.shape, end=' ') 
+        print('spatial_test_y: \t', end=' ') 
+        print(spatial_test_y.shape)
         
-        print 'total tagged pixel number: %d' % extracted_pixel_ind.shape[0]
-        print 'split_mask shape: %d' % split_mask.shape
+        print('total tagged pixel number: %d' % extracted_pixel_ind.shape[0])
+        print('split_mask shape: %d' % split_mask.shape)
         
-        print '... checking tags in spatial and spectral data'
+        print('... checking tags in spatial and spectral data')
         trainset_err = numpy.sum((spectral_train_y-spatial_train_y) ** 2)
         validset_err = numpy.sum((spectral_valid_y-spatial_valid_y) ** 2)
         testset_err  = numpy.sum((spectral_test_y-spatial_test_y) ** 2)
         if testset_err + validset_err + trainset_err == 0:
-            print 'Checking test PASSED.'
+            print('Checking test PASSED.')
         else:
-            print 'Checking test FAILED.'
+            print('Checking test FAILED.')
 
-    if raw_input('Do you want to save results to data.mat (Y/n)? ') == 'Y':
-        print '... saving datasets'
+    if input('Do you want to save results to data.mat (Y/n)? ') == 'Y':
+        print('... saving datasets')
         sio.savemat('data.mat', {
             'spectral_train_x': dataset_spectral[0][0].get_value(),
             'spectral_train_y': dataset_spectral[0][1].get_value(),
@@ -666,4 +666,4 @@ if __name__ == '__main__':
             'split_mask':       split_mask})
 
         
-    print 'Done.'
+    print('Done.')
