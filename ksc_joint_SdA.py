@@ -281,8 +281,8 @@ def run_sda(datasets=None, batch_size=100,
 
 if __name__ == '__main__':
     print('... loanding data')
-    hsi_file = '/home/hantek/data/hsi_data/kennedy/KSC.mat'
-    gnd_file = '/home/hantek/data/hsi_data/kennedy/KSC_gt.mat'
+    hsi_file = 'datasets/KSC.mat'
+    gnd_file = 'datasets/KSC_gt.mat'
     data = sio.loadmat(hsi_file)
     img = scale_to_unit_interval(data['KSC'].astype(theano.config.floatX))
     width = img.shape[0]
