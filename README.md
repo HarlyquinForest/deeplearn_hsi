@@ -31,6 +31,7 @@ PIL is used to visualize weights and classification results on the whole image. 
         pip install pillow
 
 - **imageio**
+
 scipy.misc.imsave has been removed so we have to use imageio lib
     ```
         pip install imageio
@@ -95,4 +96,5 @@ Change the loading directory in each .py file to wherever you store your dataset
 
 ## Contact:
 Zhouhan Lin: zhouhan.lin [at] umontreal.ca
+
 Amin Yousefnejad: [at] (https://linux98.ir)
