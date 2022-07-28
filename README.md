@@ -28,8 +28,12 @@ Scikit-learn is used to run control group experiments, you can skip it if you do
 PIL is used to visualize weights and classification results on the whole image. It could also be skipped. To install it, type:
 
         sudo apt-get install libjpeg libjpeg-dev libfreetype6 libfreetype6-dev zlib1g-dev
-        pip install PIL
-
+        pip install pillow
+ - imageio 
+ scipy.misc.imsave has been removed so we have to use imageio lib 
+    ```
+        pip install imageio 
+    ```
  - **CUDA**
 
 If you have a CUDA enabled GPU with you, that would save you a lot of time. But it is still OK to run all the experiments without GPU, at the expense of more patience.
@@ -90,3 +94,4 @@ Change the loading directory in each .py file to wherever you store your dataset
 
 ## Contact:
 Zhouhan Lin: zhouhan.lin [at] umontreal.ca
+Amin Yousefnejad: [https://linux98.ir]linux98.ir
