@@ -10,10 +10,10 @@ If you think it helpful, we would appreciate if you cite these papers in your wo
 ### Install Dependencies
  - **Theano**
 
-If you were using Ubuntu, simply type 
+If you were using Ubuntu, simply type
 
         sudo apt-get install python-numpy python-scipy python-dev python-pip python-nose g++ libopenblas-dev git
-        sudo pip install Theano
+        sudo pip install Theano matplotlib
 
 in your terminal. If you were not in Ubuntu, you can find all the information you need at [here](http://deeplearning.net/software/theano/).
 
@@ -29,10 +29,11 @@ PIL is used to visualize weights and classification results on the whole image. 
 
         sudo apt-get install libjpeg libjpeg-dev libfreetype6 libfreetype6-dev zlib1g-dev
         pip install pillow
- - imageio 
- scipy.misc.imsave has been removed so we have to use imageio lib 
+
+- **imageio**
+scipy.misc.imsave has been removed so we have to use imageio lib
     ```
-        pip install imageio 
+        pip install imageio
     ```
  - **CUDA**
 
@@ -42,7 +43,7 @@ If you have a CUDA enabled GPU with you, that would save you a lot of time. But 
 ### Download and prepare the datasets
 Download the two datasets used in the paper by typing the corresponding commands into your terminal:
  - [Pavia University scene](http://www.ehu.eus/ccwintco/index.php?title=Hyperspectral_Remote_Sensing_Scenes)
-        
+
         wget http://www.ehu.eus/ccwintco/uploads/e/ee/PaviaU.mat
         wget http://www.ehu.eus/ccwintco/uploads/5/50/PaviaU_gt.mat
 
@@ -59,7 +60,7 @@ Change the loading directory in each .py file to wherever you store your dataset
 
         python pavia_SdA.py
 
-   for Pavia dataset, or 
+   for Pavia dataset, or
 
         python ksc_SdA.py
 
@@ -72,7 +73,7 @@ Change the loading directory in each .py file to wherever you store your dataset
 
         python pavia_spatial_SdA.py
 
-   for Pavia dataset, or 
+   for Pavia dataset, or
 
         python ksc_spatial_SdA.py
 
@@ -84,14 +85,14 @@ Change the loading directory in each .py file to wherever you store your dataset
 
         python pavia_joint_SdA.py
 
-   for Pavia dataset, or 
+   for Pavia dataset, or
 
         python ksc_joint_SdA.py
 
    for KSC dataset.
 
-   These experiments utilizes both spectral and spatial information. They reach the state-of-the-art on both datasets, surpassing a SVM with heavily tuned parameters. 
+   These experiments utilizes both spectral and spatial information. They reach the state-of-the-art on both datasets, surpassing a SVM with heavily tuned parameters.
 
 ## Contact:
 Zhouhan Lin: zhouhan.lin [at] umontreal.ca
-Amin Yousefnejad: [https://linux98.ir]linux98.ir
+Amin Yousefnejad: [at] (https://linux98.ir)
