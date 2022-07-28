@@ -320,28 +320,28 @@ def test_dA(learning_rate=0.1, training_epochs=15,
         }
     )
 
-    start_time = time.clock()
+    start_time = time.perf_counter()
 
     ############
     # TRAINING #
     ############
 
     # go through training epochs
-    for epoch in xrange(training_epochs):
+    for epoch in range(training_epochs):
         # go through trainng set
         c = []
-        for batch_index in xrange(n_train_batches):
+        for batch_index in range(n_train_batches):
             c.append(train_da(batch_index))
 
-        print 'Training epoch %d, cost ' % epoch, numpy.mean(c)
+        print('Training epoch %d, cost ' % epoch, numpy.mean(c))
 
-    end_time = time.clock()
+    end_time = time.perf_counter()
 
     training_time = (end_time - start_time)
 
-    print >> sys.stderr, ('The no corruption code for file ' +
+    print(('The no corruption code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.2fm' % ((training_time) / 60.))
+                          ' ran for %.2fm' % ((training_time) / 60.)), file=sys.stderr)
     image = Image.fromarray(
         tile_raster_images(X=da.W.get_value(borrow=True).T,
                            img_shape=(28, 28), tile_shape=(10, 10),
@@ -377,28 +377,28 @@ def test_dA(learning_rate=0.1, training_epochs=15,
         }
     )
 
-    start_time = time.clock()
+    start_time = time.perf_counter()
 
     ############
     # TRAINING #
     ############
 
     # go through training epochs
-    for epoch in xrange(training_epochs):
+    for epoch in range(training_epochs):
         # go through trainng set
         c = []
-        for batch_index in xrange(n_train_batches):
+        for batch_index in range(n_train_batches):
             c.append(train_da(batch_index))
 
-        print 'Training epoch %d, cost ' % epoch, numpy.mean(c)
+        print('Training epoch %d, cost ' % epoch, numpy.mean(c))
 
-    end_time = time.clock()
+    end_time = time.perf_counter()
 
     training_time = (end_time - start_time)
 
-    print >> sys.stderr, ('The 30% corruption code for file ' +
+    print(('The 30% corruption code for file ' +
                           os.path.split(__file__)[1] +
-                          ' ran for %.2fm' % (training_time / 60.))
+                          ' ran for %.2fm' % (training_time / 60.)), file=sys.stderr)
 
     image = Image.fromarray(tile_raster_images(
         X=da.W.get_value(borrow=True).T,
